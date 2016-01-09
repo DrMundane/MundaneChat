@@ -7,7 +7,7 @@ loop do
 	client = server.accept    # Wait for a client to connect
 	client.puts "Hello!"
 	client.puts "Time is #{Time.now}"
-	client.puts "Welcome to MundaneChat ver 0.0.1"
+	client.puts "Welcome to MundaneChat ver 0.0.2"
 	hn = Socket.gethostname
 	p "#{hn} has connected" #Puts the host name
 	
