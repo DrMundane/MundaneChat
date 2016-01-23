@@ -10,8 +10,10 @@ message_out = Thread.new do
 	send_message = "1"
 	until send_message == "/exit"
 		send_message = gets.chomp
-		server.puts send_message
+		server.puts "#{chn}: #{send_message}"
 	end
+	server.close_write
+	server.close_read
 end
 
 message_in = Thread.new do
