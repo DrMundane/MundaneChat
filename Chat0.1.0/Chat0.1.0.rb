@@ -1,42 +1,26 @@
 #MundaneChat 0.1.0:
 require 'socket'
-require 'resolv'
 
-server = TCPSocket.new(127.0.0.1, 9876)
+server_address = "localhost" #CHANGE THIS (INPUT FROM CMD? FROM FILE?)
 
-loop do
-	client = server.accept    # Wait for a client to connect
-	client.puts "Hello!"
-	client.puts "Time is #{Time.now}"
-	client.puts "Welcome to MundaneChat ver 0.0.5"
-	shn = Socket.gethostname
-	chn = client.getpeername
-	
-	p "#{chn} has connected" #Puts the client name
-	hostcom = Thread.new do 
-		#I HEARD YOU LIKED THREADS...
-		servcom = Thread.new do #Takes input from server, prints to connected
-			puts "Servcom started" # TESTING OUTPUT <---------------------
-			status = 1
-				until status == "/exit\n"
-					status = gets
-					client.puts "#{shn}: #{status}"
-				end
-			servcom.kill
-		end
-#Input from connected user printed to server
-		puts "Hostcom started" #TESTING OUTPUT <--------------------
-		status = 1
-			until status == "/exit\n"
-				status = client.gets
-				puts "#{chn}: #{status}"
-			end
-		puts "BEFORE CLIENT EXIT" #MORE TESTING INFO
-		puts "HOSTCOM" #MORE TESTING INFO
-		hostcom.kill
+server = TCPSocket.new(server_address, 9876)
+
+chn = Socket.gethostname
+message_out = Thread.new do
+	send_message = "1"
+	until send_message == "/exit"
+		send_message = gets.chomp
+		server.puts send_message
 	end
-	
-	hostcom.join
-	hostcom.kill
-	client.close
 end
+
+message_in = Thread.new do
+	loop do
+	rec_message = server.readline.chomp
+	puts rec_message
+	end
+end
+
+message_out.join
+message_out.kill
+message_in.kill
