@@ -1,0 +1,3 @@
+use queue to get messages from threads, print to all connected users
+make /exit work for server side
+

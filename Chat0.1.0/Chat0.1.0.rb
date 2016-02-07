@@ -1,7 +1,8 @@
 #MundaneChat 0.1.0:
 require 'socket'
 
-server_address = "localhost" #CHANGE THIS (INPUT FROM CMD? FROM FILE?)
+puts "Connect to what ip?"
+server_address = gets.chomp #CHANGE THIS (INPUT FROM CMD? FROM FILE?)
 
 server = TCPSocket.new(server_address, 9876)
 
