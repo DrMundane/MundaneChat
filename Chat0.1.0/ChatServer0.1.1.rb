@@ -10,8 +10,12 @@ loop do
 	shn = Socket.gethostname
 	chn = client.getpeername
 	
+	connected_users = Array.new
 	message_queue = Queue.new
-	
+	connected_users.push (shn)
+	connected_users.push (chn)
+	puts connected_users.at(0)
+	puts connected_users.at(1)
 	message_out = Thread.new do
 		message = "1"
 		until message == "/exit"
